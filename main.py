@@ -15,8 +15,12 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template("index.html")
 
+
+@app.route('/redirect')
+def redirect_url_for():
+    return render_template("redirect_url_for.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
