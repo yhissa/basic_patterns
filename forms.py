@@ -12,6 +12,6 @@ class SampleForm(FlaskForm):
     date = DateField("Date", validators=[DataRequired()])
     text = TextAreaField("TextArea", validators=[DataRequired()])
 
-    body = CKEditorField("Comment", validators=[DataRequired()])
+    body = CKEditorField("This is CKEditor", validators=[DataRequired()])
 
     submit = SubmitField("Submit")

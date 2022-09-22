@@ -4,11 +4,21 @@
 {% block content %}
 {% include "header.html" %}
 
-<div class="col-lg-8 col-md-10 mx-auto">
+<div class="container">
+    <div class="row">
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
         {{ ckeditor.load() }}
         {{ ckeditor.config(name='body') }}
         {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+      </div>
+    </div>
 </div>
+<!--<div class="col-lg-8 col-md-10 mx-auto">-->
+<!--        {{ ckeditor.load() }}-->
+<!--        {{ ckeditor.config(name='body') }}-->
+<!--        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}-->
+<!--</div>-->
 
 
 {% include "footer.html" %}

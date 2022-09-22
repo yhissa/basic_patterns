@@ -42,7 +42,8 @@ def flash_message():
 @app.route('/sample_form', methods=["GET", "POST"])
 def sample_form():
     form = SampleForm()
-    if request.method == "POST":
+    # if request.method == "POST":
+    if form.validate_on_submit():
         print(request.form.get("number"))
         print(request.form.get("title"))
         print(request.form.get("password"))
