@@ -44,11 +44,10 @@ def sample_form():
     form = SampleForm()
     # if request.method == "POST":
     if form.validate_on_submit():
-        print(request.form.get("number"))
-        print(request.form.get("title"))
+        print(request.form.get("username"))
+        print(request.form.get("email"))
         print(request.form.get("password"))
         print(request.form.get("date"))
-        print(request.form.get("text"))
         print(request.form.get("body"))
 
     return render_template("sample_form.html", form=form)
