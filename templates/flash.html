@@ -1,0 +1,18 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block content %}
+{% include "header.html" %}
+
+<h3>flashed message</h3>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+{% include "footer.html" %}
+{% endblock %}

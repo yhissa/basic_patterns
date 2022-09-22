@@ -6,7 +6,7 @@
 <h3>This page is rendered by footer.html, index.html, footer.html. You can see it in templates folder.</h3>
 <h3>Esta pagina esta rendida por footer.html, index.html, footer.html. Puede ver las en templates vado.</h3>
 <br>
-<a href="{{url_for('redirect_url_for')}}">url_for</a>
-
+<a href="{{url_for('redirect_url_for')}}">url_for</a><br>
+<a href="{{url_for('flash_message')}}">flash message</a>
 {% include "footer.html" %}
 {% endblock %}
