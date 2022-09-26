@@ -1,20 +1,15 @@
 """
-# Initialize app
 # use bootstrap
 # URL Route Registrations
 # render template (basic.html, heaer.html, block content, footer.html)
 # Message Flashing
 """
-import secrets
-
 from flask import Flask, render_template, request, flash
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from forms import SampleForm
+from dbmodel import User, app, db
 
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = secrets.token_hex(16)
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -42,13 +37,17 @@ def flash_message():
 @app.route('/sample_form', methods=["GET", "POST"])
 def sample_form():
     form = SampleForm()
-    # if request.method == "POST":
     if form.validate_on_submit():
-        print(request.form.get("username"))
-        print(request.form.get("email"))
-        print(request.form.get("password"))
-        print(request.form.get("date"))
-        print(request.form.get("body"))
+
+        user = User(
+            name=request.form.get("username"),
+            email=request.form.get("email"),
+            password=request.form.get("password"),
+            date=request.form.get("date"),
+            body=request.form.get("body")
+        )
+        db.session.add(user)
+        db.session.commit()
 
     return render_template("sample_form.html", form=form)
 
