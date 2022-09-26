@@ -16,7 +16,37 @@ Bootstrap(app)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    # Read all record from database.
+    users = User.query.all()
+    for user in users:
+        print(user.name, user.email, user.date, user.body)
+
+    # Read a particular record by query from database.
+    particular_user = User.query.filter_by(name='John').first()
+
+    # Update A Particular Record By Query
+    update_user = User.query.filter_by(name='ohn').first()
+    if update_user:
+        update_user.email = 'Johnson@email.address.com'
+        db.session.commit()
+
+    # Update A Record By PRIMARY KEY
+    user_id = 3
+    update_user_by_key = User.query.get(user_id)
+    if update_user_by_key:
+        update_user_by_key.date = '2022-09-26'
+        db.session.commit()
+
+    # Delete A Particular Record By PRIMARY KEY
+    delete_id = 100
+    delete_user = User.query.get(delete_id)
+    if delete_user:
+        db.session.delete(delete_user)
+        db.session.commit()
+    return render_template("index.html", users=users,
+                           particular_user=particular_user,
+                           update_user=update_user,
+                           update_user_by_key=update_user_by_key)
 
 
 @app.route('/redirect')
@@ -38,7 +68,7 @@ def flash_message():
 def sample_form():
     form = SampleForm()
     if form.validate_on_submit():
-
+        # Create a new record.
         user = User(
             name=request.form.get("username"),
             email=request.form.get("email"),

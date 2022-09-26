@@ -14,6 +14,37 @@
         <a href="{{url_for('flash_message')}}">flash message</a><br>
         <a href="{{url_for('sample_form')}}">sample form</a>
       </div>
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {% if users %}
+          <h3>Read all record from database.</h3>
+          {% for user in users %}
+            {{ user.id }} {{ user.name }} {{ user.email }} {{ user.date }} {{ user.body }} <br>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {% if particular_user %}
+        <h3>Read a particular record by query from database.</h3>
+            {{ particular_user.id }} {{ particular_user.name }} {{ particular_user.email }} {{ particular_user.date }} {{ particular_user.body }} <br>
+        {% endif %}
+      </div>
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {% if update_user %}
+        <h3>Update A Particular Record By Query.</h3>
+            {{ update_user.id }} {{ update_user.name }} {{ update_user.email }} {{ update_user.date }} {{ update_user.body }} <br>
+        {% endif %}
+      </div>
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+        {% if update_user_by_key %}
+        <h3>Update A Record By PRIMARY KEY.</h3>
+            {{ update_user_by_key.id }} {{ update_user_by_key.name }}
+            {{ update_user_by_key.email }} {{ update_user_by_key.date }} {{ update_user_by_key.body }} <br>
+        {% endif %}
+      </div>
     </div>
 </div>
 

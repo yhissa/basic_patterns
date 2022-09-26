@@ -10,12 +10,12 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 
-# CONNECT TO DB
+# CONNECT TO DB. Create a new database.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-
+# Create a new table.
 db.create_all()
 
 
