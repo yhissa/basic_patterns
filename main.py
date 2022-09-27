@@ -1,17 +1,60 @@
 """
 # use bootstrap
 # URL Route Registrations
-# render template (basic.html, heaer.html, block content, footer.html)
+# render template (basic.html, header.html, block content, footer.html)
 # Message Flashing
 """
-from flask import Flask, render_template, request, flash
+from flask import render_template, request, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
-from forms import SampleForm
+# Login System
+from flask_login import login_user, LoginManager, login_required, current_user, logout_user
+# Generate password hash
+from werkzeug.security import generate_password_hash, check_password_hash
+# Import forms
+from forms import SampleForm, LoginForm
+# Initialize app. Connect to database.
 from dbmodel import User, app, db
 
 ckeditor = CKEditor(app)
 Bootstrap(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Check password
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email).first()
+        if user:
+            hashed_password = user.password
+            if check_password_hash(hashed_password, password):
+                # Logged in
+                login_user(user)
+                # redirect to home
+                return redirect(url_for('home'))
+            else:
+                flash('Password is wrong. Please, try again.')
+        else:
+            flash('This email is not registered.')
+
+    return render_template("login.html", form=form)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 
 @app.route('/')
@@ -25,7 +68,7 @@ def home():
     particular_user = User.query.filter_by(name='John').first()
 
     # Update A Particular Record By Query
-    update_user = User.query.filter_by(name='ohn').first()
+    update_user = User.query.filter_by(name='John').first()
     if update_user:
         update_user.email = 'Johnson@email.address.com'
         db.session.commit()
@@ -72,7 +115,7 @@ def sample_form():
         user = User(
             name=request.form.get("username"),
             email=request.form.get("email"),
-            password=request.form.get("password"),
+            password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8),
             date=request.form.get("date"),
             body=request.form.get("body")
         )

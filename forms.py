@@ -10,7 +10,11 @@ class SampleForm(FlaskForm):
     email = EmailField("Email Address", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     date = DateField("Registered Date", validators=[DataRequired()])
-
     body = CKEditorField("This is CKEditor", validators=[DataRequired()])
-
     submit = SubmitField("Submit")
+
+
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Login!")

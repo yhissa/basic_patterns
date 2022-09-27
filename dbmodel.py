@@ -5,6 +5,7 @@
 import secrets
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 
 app = Flask(__name__)
@@ -19,7 +20,7 @@ db = SQLAlchemy(app)
 db.create_all()
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "user_data"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
